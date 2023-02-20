@@ -39,7 +39,7 @@ const ctx = document.getElementById('myChart');
     data: {
       labels: graphLabels,
       datasets: [{
-        label: '',
+        label: 'Bitcoin Price',
         data: savedPrices,
         borderWidth: 3,
         borderColor: 'rgb(242, 169, 0)',
