@@ -1,51 +1,71 @@
-let ws = new WebSocket('wss://stream.binance.com:9443/ws/btcusdt@trade');
-let binancePrice = document.querySelector('#btcPrice');
-let walletBalance = document.querySelector('#walletBal');
-walletBalance.innerText = `${0.00693359}`
+let wsBTC = new WebSocket('wss://stream.binance.com:9443/ws/btcusdt@trade');
+let wsETH = new WebSocket('wss://stream.binance.com:9443/ws/ethusdt@trade');
+let wsDOG = new WebSocket('wss://stream.binance.com:9443/ws/dogeusdt@trade');
+let wsBNB = new WebSocket('wss://stream.binance.com:9443/ws/bnbusdt@trade');
+let binanceBTCPrice = document.querySelector('#btcPrice');
+let binanceETHPrice = document.querySelector('#ethPrice');
+let binanceDOGPrice = document.querySelector('#dogPrice');
+let binanceBNBPrice = document.querySelector('#bnbPrice');
+let walletBTCBalance = document.querySelector('#walletBTCBal');
+let walletETHBalance = document.querySelector('#walletETHBal');
+let walletDOGBalance = document.querySelector('#walletDOGBal');
+let walletBNBBalance = document.querySelector('#walletBNBBal');
+walletBTCBalance.innerText = `${0.00693359}`
+// walletETHBalance.innerText = `${0.00534452}`
+// walletDOGBalance.innerText = `${0.00453452}`
+// walletBNBBalance.innerText = `${0.00435242}`
 let graphLabels = [];
-let savedPrices = [];
-let stockObject = {};
+let savedBTCPrices = [];
+let savedETHPrices = [];
+let savedDOGPrices = [];
+let savedBNBPrices = [];
+let stockBTCObject = {};
+let stockETHObject = {};
+let stockDOGObject = {};
+let stockBNBObject = {};
 let i = -20;
 
-ws.onmessage = (e) => {
+//dalej edytowac
+
+wsBTC.onmessage = (e) => {
     // console.log(JSON.parse(e.data));
-    stockObject = JSON.parse(e.data);
+    stockBTCObject = JSON.parse(e.data);
     
-    binancePrice.innerText = "$" + (parseFloat(stockObject.p).toFixed(2));
-    document.querySelector('#walletPrice').innerText = "$" + (walletBalance.innerText *stockObject.p).toFixed(2);
+    binanceBTCPrice.innerText = "$" + (parseFloat(stockBTCObject.p).toFixed(2));
+    document.querySelector('#walletPrice').innerText = "$" + (walletBTCBalance.innerText *stockBTCObject.p).toFixed(2);
 }
 
 setInterval(() => {
-    if(!isNaN(stockObject.p))
+    if(!isNaN(stockBTCObject.p))
     {
-        savedPrices.push(parseFloat(stockObject.p).toFixed(2));
-        if(savedPrices.length <= 20)
+        savedBTCPrices.push(parseFloat(stockBTCObject.p).toFixed(2));
+        if(savedBTCPrices.length <= 20)
         {
             graphLabels.push(`${i}s`);
             i++;
         }
     }
-    if(savedPrices.length > 20)
+    if(savedBTCPrices.length > 20)
     {
-        savedPrices.shift();
+        savedBTCPrices.shift();
     }
     chart.update();
 }, 1000);
 
 const ctx = document.getElementById('myChart');
 
-  var chart = new Chart(ctx, {
+var chart = new Chart(ctx, {
     type: 'line',
     data: {
-      labels: graphLabels,
-      datasets: [{
+        labels: graphLabels,
+        datasets: [{
         label: 'Bitcoin Price',
-        data: savedPrices,
+        data: savedBTCPrices,
         borderWidth: 3,
         borderColor: 'rgb(242, 169, 0)',
         tension: 0.3,
         animation: false
-      }]
+        }]
     },
     options: {
         scales: {
@@ -54,4 +74,12 @@ const ctx = document.getElementById('myChart');
             }
         }
     }
-  });
+});
+
+// function hoverOut(img)
+// {
+//     if(img.id = "ethNavButton")
+//         img.src = 
+// }
+
+// btns = querySelectorAll('a');
