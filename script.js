@@ -1,7 +1,7 @@
 let wsBTC = new WebSocket('wss://stream.binance.com:9443/ws/btcusdt@trade');
 let binanceBTCPrice = document.querySelector('#btcPrice');
 let walletBTCBalance = document.querySelector('#walletBTCBal');
-walletBTCBalance.innerText = `${0.00693359}`
+walletBTCBalance.innerText = `${0.00770339}`
 let graphLabels = [];
 let savedBTCPrices = [];
 let stockBTCObject = {};
